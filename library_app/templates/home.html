@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Homepage </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+
+
+<body>
+
+    <h1>Homepage</h1>
+    <hr />
+
+    <div class="solid"> 
+        <center>
+            <strong>
+                <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Add New Borrower</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Book Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
+            </strong>
+        </center>
+    </div>
+
+    <hr />
+
+<div class="row">
+    <div class="column left background" style="background-color:darkgrey;"> </div>  
+
+
+    <div class="column middle">
+       <center>
+            <h2>welcome to the Homepage!</h2>
+            <p> This is has the links to the other pages and info on how our website works!</p>
+        </center>
+    </div>
+
+    <div class="column right background" style="background-color: darkgrey"> </div>
+
+</div>
+
+<hr />
+	<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
+
+</body>
+
+</html>

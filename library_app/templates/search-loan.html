@@ -1,0 +1,77 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Search </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+
+
+<body>
+
+    <h1>Loan Search</h1>
+
+    <hr />
+
+    <div class="solid"> 
+        <center>
+            <strong>
+                <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+            </strong>
+        </center>
+    </div>
+
+    <hr />
+
+<div class="row">
+    <div class="column left background" style="background-color:darkgrey;"> </div>  
+
+
+    <div class="column middle">
+        <center>
+            <form method="POST" action="/borresults/">
+                {% csrf_token %} 
+                <br>
+ 
+                    <div>
+                        <label></label>
+                        <div>
+                            <h3>Search for a Loan</h3>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label>Search:</label>
+                            <div>
+                               <input type="search" placeholder="Search..." name="searched" type="text">
+                            </div>
+                    </div>
+
+                    <div>
+                        <label ></label>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </div>
+
+                    <hr size="5" width="100%" color="blue">
+
+                </form>
+        </center>
+    </div>
+
+    <div class="column right background" style="background-color: darkgrey"> </div>
+
+</div>
+
+<hr />
+	<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
+
+</body>
+
+</html>

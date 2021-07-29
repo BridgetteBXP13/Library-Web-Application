@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> View Borrower </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+
+
+
+
+<body>
+    
+    <h1>{{borrower.Card_id.Card_id}}</h1>
+
+    <hr />
+
+    <div class="solid"> 
+        <center>
+            <strong>
+                <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="/search/">Search</a> &nbsp; &nbsp; &nbsp;
+            </strong>
+        </center>
+    </div>
+
+    <hr />
+
+<div class="row">
+    <div class="column left background" style="background-color:darkgrey;"> </div>  
+
+
+    <div class="column middle">
+        <center>
+            
+
+            <h3> Card ID: {{ borrower.Card_id }} </h3>
+
+            <br />
+            <h4>Name: {{borrower.Name}} </h4>
+
+            <h4>Phone: {{borrower.Phone}}</h4>
+
+            <h4>SSN: {{borrower.Ssn}}</h4>
+           
+            <h4>Address: {{borrower.Address}}</h4>
+            <br />
+
+            {% if borLoanCount == 0 %}
+                <h4>You have no book loans! </h4>
+
+            {% else %}
+                <h4>Availability: Out of Stock </h4>
+                <form method="POST" action="">
+                    {% csrf_token %} 
+    
+                <label>Enter your Loan ID to pay a book loan:</label>
+                    <div>
+                        <div>       
+                            <input type="checkout" placeholder="Card ID..." name="cID" type="text">
+                            
+                        </div>
+                    </div>
+    
+                    <div>
+                        <label ></label>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Check Out</button>
+                            </div>
+                    </div>
+    
+                </form>
+
+
+                
+                <br />
+                {% if borLoanCount < 1 %}
+                <h4>You must enter a valid Loan ID </h4>
+                <br />
+
+
+                {% elif borLoanCount >= 3 %}
+                <h4>You cannot have more than 3 books out at a time </h4>
+                <br />
+                
+                {% endif %}
+
+            {% endif %}
+            <br />
+            <a href="{% url 'edit-borrower' borrower.Card_id %}">Click Here to Edit</a>
+            <br />
+            <br />
+            
+
+
+
+        </center>
+           
+            
+        
+    </div>
+
+    <div class="column right background" style="background-color: darkgrey"> </div>
+
+</div>
+
+<hr />
+	
+
+</body>
+
+
+
+<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
+</html>

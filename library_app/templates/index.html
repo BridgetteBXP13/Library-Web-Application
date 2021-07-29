@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Add a Book </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+
+
+<body>
+
+    <h1>Add a book</h1>
+    
+    <hr />
+
+    <div class="solid"> 
+        <center>
+            <strong>
+                <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+            </strong>
+        </center>
+    </div>
+
+    <hr />
+
+<div class="row">
+    <div class="column left background" style="background-color:darkgrey;"> </div>  
+
+    <div class="column middle">
+        <center>
+            <form method="post" action="/std/">
+                {% csrf_token %}
+                <br>
+ 
+                <div>
+                    <label></label>
+                        <div>
+                            <h3>Enter Details</h3>
+                        </div>
+                </div>
+
+                <div>
+                    {{ form.Isbn.errors }}
+                    <label>Isbn:</label>
+                        <div>
+                            {{ form.Isbn }}
+                        </div>
+                </div>
+        
+                <div >
+                    <label >Title:</label>
+                        <div>
+                            {{ form.Title }}
+                        </div>
+                </div>
+
+                <div >
+                    <label >Authors: (Must be separated by commas ',')</label>
+                        <div>
+                            {{ authorForm.Name }}
+                        </div>
+                </div>
+         
+                <div>
+                    <label ></label>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                </div>
+            </form>
+        </center>
+    </div>
+
+    <div class="column right background" style="background-color: darkgrey"> </div>
+
+</div>
+</body>
+
+</html>

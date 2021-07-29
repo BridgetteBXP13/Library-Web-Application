@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Borrower </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+
+
+<body>
+
+    <h1>Checkout</h1>
+    <hr />
+
+    <div class="solid"> 
+        <center>
+            <strong>
+                <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="/search/">Search</a> &nbsp; &nbsp; &nbsp;
+            </strong>
+        </center>
+    </div>
+
+    <hr />
+
+<div class="row">
+    <div class="column left background" style="background-color:darkgrey;"> </div>  
+
+
+    <div class="column middle">
+        <center>
+            {% if formdone == False %}
+            
+
+                <form method="POST" action="">
+                    {% csrf_token %}
+
+
+                    <div>
+                        <label></label>
+                        <div>
+                            <h3>Enter Details</h3>
+                        </div>
+                    </div>
+
+                    <div >
+                        
+                        <label >ISBN:</label>
+                            <div>
+                                {{ form.Isbn }}
+                            </div>
+                    </div>
+
+                    <div >
+                        
+                        <label >Card ID:</label>
+                            <div>
+                                {{ form.Card_id }}
+                            </div>
+                    </div>
+
+                    <div >
+                        
+                        <label >Date Out:</label>
+                            <div>
+                                {{ form.Date_out }}
+                            </div>
+                    </div>
+
+                    <div >
+                        
+                        <label >Due Date:</label>
+                            <div>
+                                {{ form.Due_Date }}
+                            </div>
+                    </div>
+
+
+                    <div>
+                        <label ></label>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </div>
+
+                
+                </form>
+                {% if formgood == False %}
+                    <h4> Please enter valid dates or use the dates provided </h4>
+                    <br />
+                {% endif %}
+
+
+            {%elif formdone %}
+                <h3> Book checked out successfully! </h3>
+                <br />
+
+
+            {% else %}
+                <h3> You must enter your Card ID to check out this book</h3>
+                <br />
+              
+
+            {% endif %}
+        </center>
+    </div>
+
+    <div class="column right background" style="background-color: darkgrey"> </div>
+
+</div>
+
+<hr />
+	<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
+
+</body>
+
+</html>

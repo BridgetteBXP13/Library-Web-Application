@@ -1,0 +1,47 @@
+body {
+	background-color: lightgrey;
+}
+
+h1 {
+	color: white;
+	background-color: black;
+	padding: 15px;
+	text-align: center;
+	text-shadow: 1px 1px lightgrey;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.column {
+	float: left;
+	padding: 10px;
+	min-height: 600px;
+	height: auto;
+}
+
+.left {
+	width: 25%;
+	padding: 10px;
+}
+
+.right {
+	width: 25%;
+	padding: 10px;
+}
+
+.middle {
+	width: 50%;
+	padding: 10px;
+}
+
+footer {
+	color: white;
+	background-color: black;
+	text-align: center;
+	padding: 15px;
+	opacity: .7;
+	vertical-align: bottom;
+	padding-bottom: 20px;
+}

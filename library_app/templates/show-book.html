@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Index </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+
+
+
+
+<body>
+    
+    <h1>{{book.Isbn.Title}}</h1>
+
+    <hr />
+
+    <div class="solid"> 
+        <center>
+            <strong>
+                <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="/search/">Search</a> &nbsp; &nbsp; &nbsp;
+            </strong>
+        </center>
+    </div>
+
+    <hr />
+
+<div class="row">
+    <div class="column left background" style="background-color:darkgrey;"> </div>  
+
+
+    <div class="column middle">
+        <center>
+            
+
+            <h3> ISBN: {{ book.Isbn.Isbn }} </h3>
+
+            <br />
+
+            <br />
+
+            {% if bCount == 0 %}
+                <h4>Availability: In Stock </h4>
+
+            {% else %}
+                <h4>Availability: Out of Stock </h4>
+
+
+            {% endif %}
+            <br />
+            <br />
+            <br />
+
+            <form method="POST" action="">
+                {% csrf_token %} 
+
+            <label>Enter your Card ID to check this book out:</label>
+                <div>
+                    <div>       
+                        <input type="checkout" placeholder="Card ID..." name="cID" type="text">
+                        
+                    </div>
+                </div>
+
+                <div>
+                    <label ></label>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Check Out</button>
+                        </div>
+                </div>
+
+            </form>
+
+            
+
+            <br />
+            {% if idExist < 1 %}
+            <h4>You must enter a valid Card ID </h4>
+            <br />
+
+            {% elif bCount > 0 %}
+            <h4>This book is out of stock </h4>
+            <br />
+
+            {% elif booksout >= 3 %}
+            <h4>You cannot have more than 3 books out at a time </h4>
+            <br />
+            
+            {% endif %}
+
+
+        </center>
+           
+            
+        
+    </div>
+
+    <div class="column right background" style="background-color: darkgrey"> </div>
+
+</div>
+
+<hr />
+	
+
+</body>
+
+
+
+<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
+</html>
