@@ -184,11 +184,11 @@ def show_borrower(request, card_id):
     borLoanCount = borLoan.count()
     if request.method == "GET":
         return render(request, 'show-borrower.html', {'borrower': borrower, 'borLoan': borLoan, 'borLoanCount': borLoanCount})
-    else: 
+    else:
         cid = request.POST['cID']
         bor = Borrower.objects.filter(Card_id=cid)
         idExist = borrower.count()
-
+       
         loans = Book_Loans.objects.filter(Card_id=cid)
         booksout = loans.count()
 
@@ -198,8 +198,8 @@ def show_borrower(request, card_id):
             return render(request, 'show-borrower.html', {'borrower': borrower, 'borLoan': borLoan, 'borLoanCount':borLoanCount, 'idExist' : idExist, 'booksout' : booksout })
 
 
-
-def checkout(request, isbn, cID):
+# DUPLICATE OF CHECKOUT TO-DO!
+def pay_fine(request, loan_id, cID):
     
     formdone = False
     book = Book.objects.get(Isbn = isbn)
@@ -240,7 +240,7 @@ def edit_borrower(request, card_id):
     else: 
         new_Name = request.POST['new_Name']
 
-        
+        #TODO
 
         new_Phone = request.POST['new_Phone']
         new_Ssn = request.POST['new_Ssn']
