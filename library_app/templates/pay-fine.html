@@ -4,17 +4,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> View Borrower </title>
+    <title> Check Out </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
 
-
-
 <body>
-    
-    <h1>{{borrower.Card_id.Card_id}}</h1>
 
+    <h1>Checkin</h1>
     <hr />
 
     <div class="solid"> 
@@ -39,45 +36,24 @@
 
     <div class="column middle">
         <center>
+       
+                <h3> Fine paid successfully for:</h3>
+                <br />
+                <h3> Loan ID: {{ fine.Loan_id.Loan_id }}</h3>
+                <br />
+                <h3> Name: {{ fine.Loan_id.Card_id.Name }}</h3>
+                <br />
+                <h3> Card ID: {{ fine.Loan_id.Card_id.Name }} </h3>
+                <br />
+
+                <h3> Title: {{ fine.Loan_id.Isbn.Title }}</h3>
+                <br />
+                <h3> ISBN: {{ fine.Loan_id.Isbn.Isbn }}</h3>
+                <br />
+                
             
 
-            <h3>Loan ID: {{ borLoan.Loan_id }} </h3>
-            <h4>Checkout Date: {{borLoan.Date_out}}</h4>
-            <h4>Due_Date: {{borLoan.Due_Date}}</h4>
-            <h4>Date In: {{borLoan.Date_in}}</h4>
-            <br />
-            <h3>Borrower:</h3>
-            <h4>Card ID: {{borrower.Card_id}} </h4>
-            <h4>Name: {{borrower.Name}}</h4>
-            <br />
-
-            <h3>Fines:</h3>
-            <h4>Amount: {{borFine.Fine_amt}}</h4>
-            <h4>Paid: {%if borFine.Paid %}Yes{%else%}No{%endif%}</h4>
-    
-            <br />
-            <a href="{% url 'edit-borrower' borrower.Card_id %}">Click Here to Update Info</a>
-            <br />
-            <br />
-            
-            {% if borLoan.Date_in == None %}
-                <a href="{% url 'chin-page' borLoan.Isbn.Isbn borrower.Card_id %}">Click Here to Check in the book</a>
-                <br />
-                <br />
-
-            {% elif borFine.Paid == False %}
-                <a href="{% url 'pay-fine' borLoan.Loan_id %}">Click Here to pay the fine</a>
-                <br />
-                <br />
-            
-            {% endif %}
-
-
-            <footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
         </center>
-           
-            
-        
     </div>
 
     <div class="column right background" style="background-color: darkgrey"> </div>
@@ -85,11 +61,8 @@
 </div>
 
 <hr />
-	
+	<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
 
 </body>
-
-
-
 
 </html>

@@ -239,39 +239,11 @@ def checkin_page(request, isbn, cardid):
     loan.save()
     return render(request, 'checkin-page.html', {})
 
-# DUPLICATE OF CHECKOUT TO-DO!
-def pay_fine(request, loan_id, cID):
-    
-    formdone = False
-    book = Book_Loans.objects.get(Loan_id = loan_id)
-    cardID = cID
-
-    isbnNum = book.Isbn
-    currdate = datetime_safe.date.today()
-    nextdate = (datetime_safe.date.today() + timedelta(days=14))
-    
-    formDic = {'Isbn' : isbnNum, 'Card_id' : cardID, 'Date_out' : currdate, 'Due_Date' : nextdate}
-    if request.method == "GET":
-        form = BookLoansForm(initial=formDic)   
-
-        return render(request, 'checkout.html', {'formdone' : formdone, 'cardID': cardID, 'cID' : cID, 'book' : book, 'form' : form, 'currdate' : currdate, 'nextdate' : nextdate})
-
-    else:
-
-        formdone = True
-        form = BookLoansForm(request.POST)
-        if form.is_valid():
-            #try:
-                form.save()
-                return render(request, 'checkout.html', {'form':form, 'formdone' : formdone})
-           #except:
-            #    logger.info("Somehow I made it here and broke")
-             #   pass
-        else:
-            form = BookLoansForm(initial=formDic)
-            formdone = False
-            formgood = False
-            return render(request, 'checkout.html', {'formdone' : formdone, 'formgood' : formgood, 'cardID': cardID, 'cID' : cID, 'book' : book, 'form' : form, 'currdate' : currdate, 'nextdate' : nextdate})
+def pay_fine(request, loan_id):
+    fine = Fines.objects.get(Loan_id = loan_id)
+    fine.Paid = True
+    fine.save()
+    return render(request, 'pay-fine.html', {'fine' : fine})
 
 def edit_borrower(request, card_id):
     instance = get_object_or_404(Borrower, pk=card_id)
