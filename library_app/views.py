@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.http.response import Http404
 from django.db.models.aggregates import Count
 from django.db.models.fields import DateField
 from django.shortcuts import render, redirect
@@ -169,8 +170,6 @@ def checkout(request, isbn, cID):
 
 def show_loan(request, loan_id):
     borLoan = Book_Loans.objects.get(Loan_id = loan_id)
-    if borLoan.Date_in == None:
-        borLoan.Date_in = datetime_safe.date.today()
     borBook = Book.objects.get(Isbn=borLoan.Isbn.Isbn)
     borFine = Fines.objects.get(Loan_id = loan_id)
     borFine.save()
