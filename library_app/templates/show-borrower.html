@@ -23,7 +23,9 @@
                 <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                <a href="/search/">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
         </center>
     </div>
@@ -54,7 +56,7 @@
                 <h4>You have no book loans! </h4>
 
             {% else %}
-                <h4>Availability: Out of Stock </h4>
+
                 <form method="POST" action="">
                     {% csrf_token %} 
     
@@ -69,7 +71,7 @@
                     <div>
                         <label ></label>
                             <div>
-                                <button type="submit" class="btn btn-primary">Check Out</button>
+                                <button type="submit" class="btn btn-primary">Pay</button>
                             </div>
                     </div>
     

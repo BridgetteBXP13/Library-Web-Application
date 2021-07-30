@@ -4,14 +4,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Search Results </title>
+    <title> Check In </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
 
 <body>
 
-    <h1>Search Results</h1>
+    <h1>Check In</h1>
 
     <hr />
 
@@ -30,28 +30,34 @@
 
     <hr />
 
-    <div class="row">
-        <div class="column left background" style="background-color:darkgrey;"> </div>  
-    
-    
-        <div class="column middle">
+<div class="row">
+    <div class="column left background" style="background-color:darkgrey;"> </div>  
 
-            <center>
-            <form method="POST" action="/borresults/">
+
+    <div class="column middle">
+        <center>
+            <form method="POST" action="">
                 {% csrf_token %} 
                 <br>
  
                     <div>
                         <label></label>
                         <div>
-                            <h3>Search for a Borrower</h3>
+                            <h3>Enter the Card ID and ISBN Associated with the Book being checked in:</h3>
                         </div>
                     </div>
 
                     <div>
-                        <label>Search:</label>
+                        <label>ISBN:</label>
                             <div>
-                               <input type="search" placeholder="Search..." name="searched" type="text">
+                               <input type="isbn" placeholder="ISBN..." name="isbn" type="text">
+                            </div>
+                    </div>
+
+                    <div>
+                        <label>Card ID:</label>
+                            <div>
+                               <input type="cardid" placeholder="Card ID..." name="cardid" type="text">
                             </div>
                     </div>
 
@@ -62,33 +68,15 @@
                             </div>
                     </div>
                 </form>
+
+                <br />
+                {% if loanExist == 0 %}
+                <h4>There is no current loan associated with the given Card ID and ISBN </h4>
+                <br />
+
+                {% endif %}
+
         </center>
-        
-            {% if searched %}
-                <h3>Searching for {{ searched }}: </h3>
-                <hr size="5" width="98%" color="blue">
-
-                {% for borrower in borrowers %}
-
-                    Card ID: <a href="{% url 'show-borrower' borrower.Card_id %}">{{borrower.Card_id}}</a>
-                    <br/>
-                    Name: {{ borrower.Name }}
-                    <br/>
-                    Phone: {{ borrower.Phone }}
-                    <br/>
-                    Address: {{ borrower.Address }}
-
-                    <br/>
-                    <hr size="5" width="100%" color="blue">
-                    <br/>
-
-                {% endfor %}
-
-            {% else %}
-                <h3>You must enter a search field</h3>
-            {% endif %}
-            
-            <footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
     </div>
 
     <div class="column right background" style="background-color: darkgrey"> </div>
@@ -96,7 +84,7 @@
 </div>
 
 <hr />
-	
+	<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
 
 </body>
 

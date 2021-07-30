@@ -1,15 +1,14 @@
-from django.shortcuts import render, redirect
-from django.db.models import Q
-from library_app.forms import BookForm, AuthorsForm, Book_AuthorsForm, BorrowerForm, BookLoansForm, FinesForm
-from library_app.models import Book, Authors, Book_Authors, Borrower, Book_Loans, Fines
-import logging
 from datetime import datetime
 from django.db.models.aggregates import Count
 from django.db.models.fields import DateField
+from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.utils import datetime_safe
 from datetime import timedelta
-
-
+import logging
+from django.shortcuts import get_object_or_404
+from library_app.forms import BookForm, AuthorsForm, Book_AuthorsForm, BorrowerForm, BookLoansForm, FinesForm, BorrowerUpdateForm
+from library_app.models import Book, Borrower, Authors, Book_Authors, Book_Loans, Fines
 
 logger = logging.getLogger("mylogger")
 
@@ -47,7 +46,6 @@ def std(request):
 def bor(request):
     if request.method == "POST":
         form = BorrowerForm(request.POST)
-        
         if form.is_valid():
             try:
                 form.save()
@@ -59,32 +57,34 @@ def bor(request):
         form = BorrowerForm()
     return render(request, 'Borrower.html',{'form':form})
 
-def home_view(request, *args, **kwargs):
-    return render(request, 'home.html',{})
-    
+def home(request):
+    return render(request, 'home.html', {})
+
 def view(request, *args, **kwargs):
     return render(request, 'view.html',{})
 
 def results(request):
     if request.method == "POST":
         searched = request.POST['searched']
-        titles = Book_Authors.objects.filter(Q(Isbn__Title__icontains=searched) | Q(Author_id__Name__icontains=searched))
+        titles = Book_Authors.objects.filter(Q(Isbn__Title__icontains=searched) | Q(Author_id__Name__icontains=searched)).order_by('Isbn')
         titles_list = list(titles)
         x=0
-        for title in titles_list:
-            while x<(len(titles_list)-1):
+        if searched != '':
+            for title in titles_list:
+                while x<(len(titles_list)-1):
+                    
+                    if titles_list[x].Isbn == titles_list[x+1].Isbn:
 
-                if titles_list[x].Isbn == titles_list[x+1].Isbn:
-
-                    titles_list[x].Author_id.Name = (titles_list[x].Author_id.Name + ", " + titles_list[x+1].Author_id.Name)
-                    titles_list.remove(titles_list[x+1])
-                    x=x-1
-                x=x+1
+                        titles_list[x].Author_id.Name = (titles_list[x].Author_id.Name + ", " + titles_list[x+1].Author_id.Name)
+                        
+                        titles_list.remove(titles_list[x+1])
+                        x=x-1
+                    x=x+1
 
         return render(request, 'search-results.html', {'searched':searched, 'titles':titles, 'titles_list':titles_list})
 
     else:
-        return render(request, 'search-results.html', {}) 
+        return render(request, 'search-results.html', {})
 
 
 def borresults(request):
@@ -95,13 +95,15 @@ def borresults(request):
         return render(request, 'search-borrower-results.html', {'searched':searched, 'borrowers':borrowers})
 
     else:
-        return render(request, 'search-borrower-results.html', {}) 
+        return render(request, 'search-borrower-results.html', {})
+
 
 def search(request):
     return render(request, 'search-page.html', {}) 
 
 def borsearch(request):
-    return render(request, 'search-borrower.html', {}) 
+    return render(request, 'search-borrower.html', {})
+
 def show_book(request, book_id):
     book = Book_Authors.objects.get(pk = book_id)
     x = book.Isbn.Isbn
@@ -114,14 +116,13 @@ def show_book(request, book_id):
         borrower = Borrower.objects.filter(Card_id=cid)
         idExist = borrower.count()
 
-        loans = Book_Loans.objects.filter(Card_id=cid)
+        loans = Book_Loans.objects.filter(Card_id=cid, Date_in__isnull=True)
         booksout = loans.count()
 
         if idExist != 0 and booksout < 3 and bCount == 0:
             return redirect(f'/checkout/{book.Isbn.Isbn}/{cid}')
         else:
             return render(request, 'show-book.html', {'book': book, 'bookStat': bookStat, 'bCount': bCount, 'idExist' : idExist, 'booksout' : booksout })
-
 
 def checkout(request, isbn, cID):
     
@@ -144,18 +145,16 @@ def checkout(request, isbn, cID):
         formdone = True
         form = BookLoansForm(request.POST)
         if form.is_valid():
-            #try:
+            try:
                 form.save()
                 return render(request, 'checkout.html', {'form':form, 'formdone' : formdone})
-           #except:
-            #    logger.info("Somehow I made it here and broke")
-             #   pass
+            except:
+                pass
         else:
             form = BookLoansForm(initial=formDic)
             formdone = False
             formgood = False
             return render(request, 'checkout.html', {'formdone' : formdone, 'formgood' : formgood, 'cardID': cardID, 'cID' : cID, 'book' : book, 'form' : form, 'currdate' : currdate, 'nextdate' : nextdate})
-
 
 def show_loan(request, card_id):
     borrower = Borrower.objects.get(Card_id = card_id)
@@ -187,7 +186,7 @@ def show_borrower(request, card_id):
     else:
         cid = request.POST['cID']
         bor = Borrower.objects.filter(Card_id=cid)
-        idExist = borrower.count()
+        idExist = bor.count()
        
         loans = Book_Loans.objects.filter(Card_id=cid)
         booksout = loans.count()
@@ -197,12 +196,36 @@ def show_borrower(request, card_id):
         else:
             return render(request, 'show-borrower.html', {'borrower': borrower, 'borLoan': borLoan, 'borLoanCount':borLoanCount, 'idExist' : idExist, 'booksout' : booksout })
 
+def checkin_get(request):
+    if request.method == 'GET':
+        return render(request, 'checkin-get.html', {})
+
+
+    else:
+        isbn = request.POST['isbn']
+        cid = request.POST['cardid']
+
+        loan = Book_Loans.objects.filter(Isbn = isbn, Card_id = cid, Date_in__isnull=True)
+        loanExist = loan.count()
+
+        if loanExist > 0:
+            return redirect(f'/checkin-page/{isbn}/{cid}')
+
+        else:
+            return render(request, 'checkin-get.html', {'loanExist' : loanExist})
+            
+def checkin_page(request, isbn, cardid):
+    currdate = datetime_safe.date.today()
+    loan = Book_Loans.objects.get(Isbn = isbn, Card_id = cardid, Date_in__isnull=True)
+    loan.Date_in = currdate
+    loan.save()
+    return render(request, 'checkin-page.html', {})
 
 # DUPLICATE OF CHECKOUT TO-DO!
 def pay_fine(request, loan_id, cID):
     
     formdone = False
-    book = Book.objects.get(Isbn = isbn)
+    book = Book_Loans.objects.get(Loan_id = loan_id)
     cardID = cID
 
     isbnNum = book.Isbn
@@ -234,13 +257,13 @@ def pay_fine(request, loan_id, cID):
 
 def edit_borrower(request, card_id):
     instance = get_object_or_404(Borrower, pk=card_id)
-    form = BorrowerForm(request.POST or None, instance=instance)
-    logger.info(form)
+    form = BorrowerUpdateForm(request.POST or None, instance=instance)
+    
     if form.is_valid():
         form.save()
         return redirect('view')
     else:
+        print("Invalid form")
         logger.info("Invalid form")
         
     return render(request, 'edit-borrower.html', {'borrower': instance, 'form':form})
-

@@ -14,24 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
 from library_app import views
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home_view, name=''),
+    path('', views.home, name=''),
     path('std/', views.std, name='std'),
 	path('bor/', views.bor, name='bor'),
-    path('results/', views.results, name='results'),
+    path('results/', views.results, name= 'results'),
     path('search/', views.search, name='search'),
+    path('show_book/<book_id>', views.show_book, name='show-book'),
+    path('checkout/<isbn>/<cID>', views.checkout, name='checkout'),
+    path('checkin-get/', views.checkin_get, name='chin-get'),
+    path('checkin-page/<isbn>/<cardid>', views.checkin_page, name='chin-page'),
     path('view/', views.view, name='view'),
     path('borsearch/', views.borsearch, name='borsearch'),
     path('borresults/', views.borresults, name='borresults'),
-    path('show-book/<book_id>', views.show_book, name='show-book'),
-    path('checkout/<isbn>/<cID>', views.checkout, name='checkout'),
-    path('show-loan/<loan_id>', views.show_loan, name='show-loan'),
     path('show-borrower/<card_id>', views.show_borrower, name='show-borrower'),
-    path('pay-fine/<loan_id>/<cID>', views.checkout, name='pay-fine'),
     path('show-borrower/edit/<card_id>', views.edit_borrower, name='edit-borrower'),
+    path('pay-fine/<loan_id>/<cID>', views.checkout, name='pay-fine'),
 ]
+
+

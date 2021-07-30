@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Borrower </title>
+    <title> Check Out </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
@@ -20,7 +20,9 @@
                 <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                <a href="/search/">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
         </center>
     </div>

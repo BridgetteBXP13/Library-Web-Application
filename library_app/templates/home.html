@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Homepage </title>
+    <title> Home </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
@@ -13,19 +13,18 @@
 
     <h1>Homepage</h1>
     <hr />
-
-    <div class="solid"> 
-        <center>
-            <strong>
-                <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'bor' %}">Add New Borrower</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'search' %}">Book Search</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
-            </strong>
-        </center>
-    </div>
-
+        <div class="solid"> 
+            <center>
+                <strong>
+                    <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
+                </strong>
+            </center>
+        </div>
     <hr />
 
 <div class="row">
@@ -34,7 +33,7 @@
 
     <div class="column middle">
        <center>
-            <h2>welcome to the Homepage!</h2>
+            <h2>Welcome to the Homepage!</h2>
             <p> This is has the links to the other pages and info on how our website works!</p>
         </center>
     </div>

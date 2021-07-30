@@ -4,15 +4,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Book Search </title>
+    <title> Check Out </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
 
 <body>
 
-    <h1>Search</h1>
-
+    <h1>Checkin</h1>
     <hr />
 
     <div class="solid"> 
@@ -36,31 +35,11 @@
 
     <div class="column middle">
         <center>
-            <form method="POST" action="/results/">
-                {% csrf_token %} 
-                <br>
- 
-                    <div>
-                        <label></label>
-                        <div>
-                            <h3>Search a Book Title or Author</h3>
-                        </div>
-                    </div>
+       
+                <h3> Book checked in successfully! </h3>
+                <br />
+            
 
-                    <div>
-                        <label>Search:</label>
-                            <div>
-                               <input type="search" placeholder="Search..." name="searched" type="text">
-                            </div>
-                    </div>
-
-                    <div>
-                        <label ></label>
-                            <div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                    </div>
-                </form>
         </center>
     </div>
 
