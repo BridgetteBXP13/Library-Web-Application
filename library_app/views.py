@@ -233,17 +233,14 @@ def pay_fine(request, loan_id, cID):
             return render(request, 'checkout.html', {'formdone' : formdone, 'formgood' : formgood, 'cardID': cardID, 'cID' : cID, 'book' : book, 'form' : form, 'currdate' : currdate, 'nextdate' : nextdate})
 
 def edit_borrower(request, card_id):
-    borrower = Borrower.objects.get(Card_id = card_id)
+    instance = get_object_or_404(Borrower, pk=card_id)
+    form = BorrowerForm(request.POST or None, instance=instance)
+    logger.info(form)
+    if form.is_valid():
+        form.save()
+        return redirect('view')
+    else:
+        logger.info("Invalid form")
+        
+    return render(request, 'edit-borrower.html', {'borrower': instance, 'form':form})
 
-    if request.method == "GET":
-        return render(request, 'edit-borrower.html', {'borrower': borrower})
-    else: 
-        new_Name = request.POST['new_Name']
-
-        #TODO
-
-        new_Phone = request.POST['new_Phone']
-        new_Ssn = request.POST['new_Ssn']
-        new_Address = request.POST['new_Address']
-
-    return render(request, 'edit-borrower.html', {'borrower': borrower})
