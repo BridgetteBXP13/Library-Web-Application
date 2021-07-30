@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Index </title>
+    <title> Book Search </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
@@ -23,7 +23,9 @@
                 <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                <a href="/search/">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
         </center>
     </div>
@@ -65,27 +67,27 @@
         </center>
 
         
-            {% if searched %}
-                <h3>Searching for {{ searched }}: </h3>
+        {% if searched %}
+        <h3>Searching for {{ searched }}: </h3>
 
-                {% for title in titles_list %}
+        {% for title in titles_list %}
 
-                    Title: <a href="{% url 'show-book' title.Book_Authors_id %}">{{ title.Isbn.Title }}</a>
-                    <br/>
-                    <br/>
-                    Isbn: {{title.Isbn.Isbn}}
-                    <br/>
-                    <br/>
-                    Authors: {{ title.Author_id.Name }}
-                    <br/>
-                    <hr size="5" width="100%" color="blue">
-                    <br/>
+            Title: <a href="{% url 'show-book' title.Book_Authors_id %}">{{ title.Isbn.Title }}</a>
+            <br/>
+            <br/>
+            Isbn: {{title.Isbn.Isbn}}
+            <br/>
+            <br/>
+            Authors: {{ title.Author_id.Name }}
+            <br/>
+            <hr size="5" width="100%" color="blue">
+            <br/>
 
-                {% endfor %}
+        {% endfor %}
 
-            {% else %}
-                <h3>You must enter a search field</h3>
-            {% endif %}
+    {% else %}
+        <h3>You must enter a search field</h3>
+    {% endif %}
             
             <footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
     </div>

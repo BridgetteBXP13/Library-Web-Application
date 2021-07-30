@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> New Borrower </title>
+    <title> Borrower </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
@@ -21,6 +21,8 @@
                 <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
         </center>
     </div>
@@ -36,7 +38,7 @@
             <form method="post" action="/bor/">
                 {% csrf_token %} 
                 <br>
-
+ 
                     <div>
                         <label></label>
                         <div>
@@ -44,14 +46,6 @@
                         </div>
                     </div>
         
-                    <div>
-                        {{form.Card_id.errors}}
-                        <label></label>
-                        <div>
-                            {{ form.Card_id.as_hidden }}
-                        </div>
-                    </div>
-
                     <div >
                         {{ form.Ssn.errors }}
                         <label >SSN:</label>
@@ -104,4 +98,3 @@
 </body>
 
 </html>
-

@@ -1,5 +1,5 @@
 from django import forms
-from library_app.models import Book, Authors, Book_Authors, Borrower, Book_Loans, Fines
+from library_app.models import Book, Borrower, Book_Loans, Authors, Book_Authors, Fines
 
 class BookForm(forms.ModelForm):
     class Meta:
@@ -19,7 +19,13 @@ class Book_AuthorsForm(forms.ModelForm):
 class BorrowerForm(forms.ModelForm):
     class Meta:
         model = Borrower
-        fields = "__all__"
+        fields = [
+            'Card_id',
+            'Ssn',
+            'Name',
+            'Address',
+            'Phone'
+        ]
 
             
 class BookLoansForm(forms.ModelForm):
@@ -30,6 +36,17 @@ class BookLoansForm(forms.ModelForm):
             'Card_id',
             'Date_out',
             'Due_Date'
+        ]
+
+
+class BorrowerUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Borrower
+        fields = [
+            'Ssn',
+            'Name',
+            'Address',
+            'Phone'
         ]
 
 class FinesForm(forms.ModelForm):
