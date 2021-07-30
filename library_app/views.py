@@ -154,12 +154,13 @@ def checkout(request, isbn, cID):
         formdone = True
         form = BookLoansForm(request.POST)
         if form.is_valid():
-            #try:
-                form.save()
+            try:
+                book_loan=form.save()
+                fines = Fines.objects.create(Loan_id=book_loan)
                 return render(request, 'checkout.html', {'form':form, 'formdone' : formdone})
-           #except:
+            except:
             #    logger.info("Somehow I made it here and broke")
-             #   pass
+                pass
         else:
             form = BookLoansForm(initial=formDic)
             formdone = False
@@ -169,12 +170,15 @@ def checkout(request, isbn, cID):
 
 def show_loan(request, loan_id):
     borLoan = Book_Loans.objects.get(Loan_id = loan_id)
+    borLoan.Date_in = datetime_safe.date.today()
+    borBook = Book.objects.get(Isbn=borLoan.Isbn.Isbn)
     borFine = Fines.objects.get(Loan_id = loan_id)
+    borFine.save()
     x = borLoan.Card_id.Card_id
     borrower = Borrower.objects.get(Card_id = x)
 
 
-    return render(request, 'show-loan.html', {'borLoan':borLoan,'borFine':borFine, 'borrower':borrower})
+    return render(request, 'show-loan.html', {'borLoan':borLoan,'borFine':borFine,'borBook':borBook, 'borrower':borrower})
 
 
 def show_borrower(request, card_id):
@@ -258,19 +262,16 @@ def pay_fine(request, loan_id, cID):
 
 def edit_borrower(request, card_id):
     instance = get_object_or_404(Borrower, pk=card_id)
-    loan_instance = Borrower.objects.filter(Card_id=card_id)
     old_instance = get_object_or_404(Borrower, pk=card_id)
+    loan_instance = Book_Loans.objects.filter(Card_id=old_instance.Card_id)
     form = BorrowerForm(request.POST or None, instance=instance)
     if form.is_valid():
         form.save()
         if instance.Phone != old_instance.Phone:
-            if loan_instance:
-                x=0
-                for loan in loan_instance:
-                    loan_instance[x].Card_id = instance.Card_id
-                    x=x+1
+            loan_instance = Book_Loans.objects.filter(Card_id=old_instance.Card_id).update(Card_id=instance.Card_id)
+                
 
             Borrower.objects.filter(Phone=old_instance.Phone).delete()
         return redirect('view')
         
-    return render(request, 'edit-borrower.html', {'borrower': instance, 'form':form})
+    return render(request, 'edit-borrower.html', {'borrower': instance,'loan_instance':loan_instance, 'form':form})

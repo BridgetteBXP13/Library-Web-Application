@@ -40,7 +40,6 @@
 
             <h3> Card ID: {{ borrower.Card_id }} </h3>
 
-            <br />
             <h4>Name: {{borrower.Name}} </h4>
 
             <h4>Phone: {{borrower.Phone}}</h4>
@@ -48,7 +47,6 @@
             <h4>SSN: {{borrower.Ssn}}</h4>
            
             <h4>Address: {{borrower.Address}}</h4>
-            <br />
 
             {% if borLoanCount == 0 %}
                 <h4>You have no book loans! </h4>
@@ -57,34 +55,29 @@
                 <form method="POST" action="">
                     {% csrf_token %} 
     
-                <label>Enter your Loan ID to pay a book loan:</label>
-                    <div>
-                        <div>       
-                            <input type="checkout" placeholder="Card ID..." name="cID" type="text">
-                            
-                        </div>
-                    </div>
-    
-                    <div>
-                        <label ></label>
-                            <div>
-                                <button type="submit" class="btn btn-primary">Check Out</button>
-                            </div>
-                    </div>
+                <h4>Click a loan below to view:</h4>
+                    {% for loan in borLoan %}
+                    
+                   Loan ID: <a href="{% url 'show-loan' loan.Loan_id %}">{{loan.Loan_id}}</a>&emsp;&emsp;
+                   Isbn: {{loan.Isbn.Isbn}} <br />
+                   Date Checked Out: {{loan.Date_out}} <br />
+                   Due Date: {{loan.Due_Date}} <br />
+                   <br />
+                    {% endfor %}
     
                 </form>
 
 
                 
-                <br />
+                
                 {% if borLoanCount < 1 %}
                 <h4>You must enter a valid Loan ID </h4>
-                <br />
+                
 
 
                 {% elif borLoanCount >= 3 %}
-                <h4>You cannot have more than 3 books out at a time </h4>
-                <br />
+                <h4>You cannot have more than 3 book loans at a time </h4>
+                
                 
                 {% endif %}
 

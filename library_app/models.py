@@ -68,14 +68,13 @@ class Fines(models.Model):
     Paid = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
-            if self.Fine_amt == 0:
-                try:
-                    book_loan = Book_Loans.objects.get(Loan_id=self.Loan_id)
-                    delta = date=datetime.now().date - book_loan.Due_Date
-                    self.Fine_amt = (.25*delta.days)
-                except:
-                    print("Given book loan id doesn't exist!")
-            super(Fines, self).save(*args, **kwargs)
+        try:
+            book_loan = Book_Loans.objects.get(Loan_id=self.Loan_id.Loan_id)
+            delta = datetime.now().date() - book_loan.Due_Date
+            self.Fine_amt = (.25*delta.days)
+        except:
+            print("Given book loan id doesn't exist!")
+        super(Fines, self).save(*args, **kwargs)
 
     class Meta:
         db_table = 'FINES'
