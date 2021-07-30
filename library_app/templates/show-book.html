@@ -46,35 +46,33 @@
 
             {% if bCount == 0 %}
                 <h4>Availability: In Stock </h4>
-
+                <form method="POST" action="">
+                    {% csrf_token %} 
+    
+                <label>Enter your Card ID to check this book out:</label>
+                    <div>
+                        <div>       
+                            <input type="checkout" placeholder="Card ID..." name="cID" type="text">
+                            
+                        </div>
+                    </div>
+    
+                    <div>
+                        <label ></label>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Check Out</button>
+                            </div>
+                    </div>
+    
+                </form>
             {% else %}
                 <h4>Availability: Out of Stock </h4>
 
 
             {% endif %}
-            <br />
-            <br />
-            <br />
 
-            <form method="POST" action="">
-                {% csrf_token %} 
 
-            <label>Enter your Card ID to check this book out:</label>
-                <div>
-                    <div>       
-                        <input type="checkout" placeholder="Card ID..." name="cID" type="text">
-                        
-                    </div>
-                </div>
-
-                <div>
-                    <label ></label>
-                        <div>
-                            <button type="submit" class="btn btn-primary">Check Out</button>
-                        </div>
-                </div>
-
-            </form>
+            
 
             
 
