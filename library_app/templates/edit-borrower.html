@@ -13,7 +13,7 @@
 
 <body>
     
-    <h1>{{borrower.Card_id.Card_id}}</h1>
+    <h1>Update Borrower Information</h1>
 
     <hr />
 
@@ -40,80 +40,27 @@
 
             <h3> Current Card ID: {{ borrower.Card_id }} </h3>    
 
-            <h4> Current Name: {{borrower.Name}} </h4>
 
-            <div>
-                <div>       
-                    <input type="new_name" placeholder="New Name..." name="new_Name" type="text">
-                    
-                </div>
-            </div>
-
-
-        </form>
-
-            <h4> Current Phone: {{borrower.Phone}}</h4>
-
-            <div>
-                <div>       
-                    <input type="new_phone" placeholder="New Phone..." name="new_Phone" type="text">
-                    
-                </div>
-            </div>
-
-        </form>
-
-            <h4>SSN: {{borrower.Ssn}}</h4>
-           
-            <div>
-                <div>       
-                    <input type="new_ssn" placeholder=" New SSN..." name="new_Ssn" type="text">
-                    
-                </div>
-            </div>
-
-
-        </form>
-
-            <h4>Address: {{borrower.Address}}</h4>
-
-            <label>New Address:</label>
-            <div>
-                <div>       
-                    <input type="new_address" placeholder="Address..." name="new_Address" type="text">
-                    
-                </div>
-            </div>
-
-            <div>
-                <label ></label>
-                    <div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-            </div>
-
-        </form>
-            <br />
-
-
-                
+            <form action="" method=POST>
+                {% csrf_token %}
+                <br/>
+                {{form.Name}}
                 <br />
-                {% if borLoanCount < 1 %}
-                <h4>You must enter a valid Loan ID </h4>
+                {{form.Phone}}
+                <br />
+                {{form.Ssn}}
+                <br />
+                {{form.Address}}
                 <br />
 
+                <input type="submit" value="Update" class = "btn btn-secondary">
 
-                {% elif borLoanCount >= 3 %}
-                <h4>You cannot have more than 3 books out at a time </h4>
-                <br />
-                
-                {% endif %}
 
-        
-            <br />
-            <a href="{% url 'show-borrower' borrower.Card_id %}">Click Here to Exit</a>
-            <br />
-            <br />
+
+
+            
+            </form>
+
             
 
 
