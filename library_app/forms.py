@@ -21,6 +21,7 @@ class BorrowerForm(forms.ModelForm):
         model = Borrower
         fields = "__all__"
 
+            
 class BookLoansForm(forms.ModelForm):
     class Meta:
         model = Book_Loans

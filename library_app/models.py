@@ -35,10 +35,10 @@ class Book_Authors(models.Model):
 # BORROWER
 class Borrower(models.Model):
     Card_id = models.CharField(max_length=8, null=False, blank=True, primary_key=True, unique=True)
-    Ssn = models.CharField(max_length=11, null=False, blank=False, unique=True, validators=[RegexValidator(r'^[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{4}$', 'Valid ssn is required! \nMust be in form: 123-45-6789')])
+    Ssn = models.CharField(max_length=11, null=False, blank=False, validators=[RegexValidator(r'^[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{4}$', 'Valid ssn is required! \nMust be in form: 123-45-6789')])
     Name = models.CharField(max_length=200, null=False, blank=False)
     Address = models.CharField(max_length=200, null=False, blank=False)
-    Phone = models.CharField(max_length=14, null=False, blank=False, unique=True, validators=[RegexValidator(r'^[(]{1}[0-9]{3}[)]{1}[ ]{1}[0-9]{3}[-]{1}[0-9]{4}$', 'Valid Phone number is required! \nMust be in form: (123) 456-7890')])
+    Phone = models.CharField(max_length=14, null=False, blank=False, validators=[RegexValidator(r'^[(]{1}[0-9]{3}[)]{1}[ ]{1}[0-9]{3}[-]{1}[0-9]{4}$', 'Valid Phone number is required! \nMust be in form: (123) 456-7890')])
 
     def save(self, *args, **kwargs):
         if not self.Card_id:

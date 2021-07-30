@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Q
 from library_app.forms import BookForm, AuthorsForm, Book_AuthorsForm, BorrowerForm, BookLoansForm, FinesForm
 from library_app.models import Book, Authors, Book_Authors, Borrower, Book_Loans, Fines
@@ -47,9 +47,9 @@ def std(request):
 def bor(request):
     if request.method == "POST":
         form = BorrowerForm(request.POST)
-        
+        form.validate_unique()
         if form.is_valid():
-            try:
+            try: 
                 form.save()
                 return redirect('/view')
             except:
@@ -233,17 +233,13 @@ def pay_fine(request, loan_id, cID):
             return render(request, 'checkout.html', {'formdone' : formdone, 'formgood' : formgood, 'cardID': cardID, 'cID' : cID, 'book' : book, 'form' : form, 'currdate' : currdate, 'nextdate' : nextdate})
 
 def edit_borrower(request, card_id):
-    borrower = Borrower.objects.get(Card_id = card_id)
-
-    if request.method == "GET":
-        return render(request, 'edit-borrower.html', {'borrower': borrower})
-    else: 
-        new_Name = request.POST['new_Name']
-
-        #TODO
-
-        new_Phone = request.POST['new_Phone']
-        new_Ssn = request.POST['new_Ssn']
-        new_Address = request.POST['new_Address']
-
-    return render(request, 'edit-borrower.html', {'borrower': borrower})
+    instance = get_object_or_404(Borrower, pk=card_id)
+    form = BorrowerForm(request.POST or None, instance=instance)
+    logger.info(form)
+    if form.is_valid():
+        form.save()
+        return redirect('view')
+    else:
+        logger.info("Invalid form")
+        
+    return render(request, 'edit-borrower.html', {'borrower': instance, 'form':form})
