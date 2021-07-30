@@ -4,14 +4,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Borrower </title>
+    <title> Search Loan Results </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
 
 <body>
 
-    <h1>Create a User</h1>
+    <h1>Search Results</h1>
+
     <hr />
 
     <div class="solid"> 
@@ -30,52 +31,28 @@
 
     <hr />
 
-<div class="row">
-    <div class="column left background" style="background-color:darkgrey;"> </div>  
+    <div class="row">
+        <div class="column left background" style="background-color:darkgrey;"> </div>  
+    
+    
+        <div class="column middle">
 
-
-    <div class="column middle">
-        <center>
-            <form method="post" action="/bor/">
+            <center>
+            <form method="POST" action="/loanresults/">
                 {% csrf_token %} 
                 <br>
  
                     <div>
                         <label></label>
                         <div>
-                            <h3>Enter Details</h3>
+                            <h3>Search for a Loan</h3>
                         </div>
                     </div>
-        
-                    <div >
-                        {{ form.Ssn.errors }}
-                        <label >SSN:</label>
-                            <div>
-                                {{ form.Ssn }}
-                            </div>
-                    </div>
-         
-                    <div>
-                        {{ form.Name.errors }}
-                        <label>Name:</label>
-                            <div>
-                                {{ form.Name }}
-                            </div>
-                    </div>
 
                     <div>
-                        {{ form.Address.errors }}
-                        <label>Address:</label>
+                        <label>Search:</label>
                             <div>
-                                {{ form.Address }}
-                            </div>
-                    </div>
-
-                    <div>
-                        {{ form.Phone.errors }}
-                        <label>Phone:</label>
-                            <div>
-                                {{ form.Phone }}
+                               <input type="search" placeholder="Search..." name="searched" type="text">
                             </div>
                     </div>
 
@@ -87,6 +64,34 @@
                     </div>
                 </form>
         </center>
+        
+            {% if searched %}
+                <h3>Searching for {{ searched }}: </h3>
+                <hr size="5" width="98%" color="blue">
+
+                {% for Loan in loan %}
+
+                    Loan ID: <a href="{% url 'show-loan' Loan.Loan_id %}">{{Loan.Loan_id}}</a>
+                    <br/>
+                    Card ID: {{ Loan.Card_id }}
+                    <br/>
+                    Name: {{ Loan.Card_id.Name }}
+                    <br/>
+                    Isbn: {{ Loan.Isbn }}
+                    <br/>
+                    Title: {{ Loan.Isbn.Title }}
+
+                    <br/>
+                    <hr size="5" width="100%" color="blue">
+                    <br/>
+
+                {% endfor %}
+
+            {% else %}
+                <h3>You must enter a search field</h3>
+            {% endif %}
+            
+            <footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
     </div>
 
     <div class="column right background" style="background-color: darkgrey"> </div>
@@ -94,7 +99,7 @@
 </div>
 
 <hr />
-	<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
+	
 
 </body>
 

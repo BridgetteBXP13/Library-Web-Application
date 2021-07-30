@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Search </title>
+    <title> Loan Search </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
@@ -22,6 +22,9 @@
                 <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'loansearch' %}">Loan Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
         </center>
     </div>
@@ -34,7 +37,7 @@
 
     <div class="column middle">
         <center>
-            <form method="POST" action="/loansearch/">
+            <form method="POST" action="/loanresults/">
                 {% csrf_token %} 
                 <br>
  
@@ -58,9 +61,6 @@
                                 <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                     </div>
-
-                    <hr size="5" width="100%" color="blue">
-
                 </form>
         </center>
     </div>

@@ -108,11 +108,26 @@ def borresults(request):
         return render(request, 'search-borrower-results.html', {})
 
 
+def loanresults(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        loan = Book_Loans.objects.filter(Q(Isbn__Isbn__icontains=searched) | Q(Card_id__Card_id__icontains=searched) | Q(Card_id__Name__icontains=searched))
+
+        return render(request, 'search-loan-results.html', {'loan' : loan, 'searched' : searched})
+
+    else:
+        return render(request, 'search-loan-results.html', {})
+     
+
+
 def search(request):
     return render(request, 'search-page.html', {}) 
 
 def borsearch(request):
     return render(request, 'search-borrower.html', {}) 
+
+def loansearch(request):
+    return render(request, 'search-loan.html', {}) 
 
 def show_book(request, book_id):
     book = Book_Authors.objects.get(pk = book_id)

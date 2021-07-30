@@ -23,7 +23,10 @@
                 <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                <a href="/search/">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'loansearch' %}">Loan Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
         </center>
     </div>
@@ -47,17 +50,24 @@
             <h4>Card ID: {{borrower.Card_id}} </h4>
             <h4>Name: {{borrower.Name}}</h4>
             <br />
+
             <h3>Fines:</h3>
             <h4>Amount: {{borFine.Fine_amt}}</h4>
             <h4>Paid: {%if borFine.Paid %}Yes{%else%}No{%endif%}</h4>
+    
             <br />
             <a href="{% url 'edit-borrower' borrower.Card_id %}">Click Here to Update Info</a>
             <br />
             <br />
             
+            {% if borLoan.Date_in == None %}
+                <a href="{% url 'chin-page' borLoan.Isbn.Isbn borrower.Card_id %}">Click Here to Check in the book</a>
+                <br />
+                <br />
+            {% endif %}
 
 
-
+            <footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
         </center>
            
             
@@ -75,5 +85,5 @@
 
 
 
-<footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>
+
 </html>

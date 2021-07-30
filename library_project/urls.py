@@ -36,8 +36,8 @@ urlpatterns = [
     path('show-borrower/edit/<card_id>', views.edit_borrower, name='edit-borrower'),
     path('pay-fine/<loan_id>/<cID>', views.checkout, name='pay-fine'),
     path('show-loan/<loan_id>', views.show_loan, name='show-loan'),
-    path('loansearch/', views.borsearch, name='borsearch'),
-    path('loanresults/', views.borresults, name='borresults'),
+    path('loansearch/', views.loansearch, name='loansearch'),
+    path('loanresults/', views.loanresults, name='loanresults'),
 ]
 
 
