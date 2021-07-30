@@ -70,7 +70,11 @@ class Fines(models.Model):
     def save(self, *args, **kwargs):
         try:
             book_loan = Book_Loans.objects.get(Loan_id=self.Loan_id.Loan_id)
-            delta = datetime.now().date() - book_loan.Due_Date
+            if book_loan.Date_in == None:
+                delta = datetime.now().date() - book_loan.Due_Date
+            else:
+                delta = book_loan.Date_in - book_loan.Due_Date
+                
             if delta.days > 0:
                 self.Fine_amt = (.25*delta.days)
             else:
