@@ -35,6 +35,7 @@ urlpatterns = [
     path('show-borrower/<card_id>', views.show_borrower, name='show-borrower'),
     path('show-borrower/edit/<card_id>', views.edit_borrower, name='edit-borrower'),
     path('pay-fine/<loan_id>/<cID>', views.checkout, name='pay-fine'),
+    path('show-loan/<loan_id>', views.show_loan, name='show-loan')
 ]
 
 
