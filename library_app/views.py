@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.db.models import Q
 from library_app.forms import BookForm, AuthorsForm, Book_AuthorsForm, BorrowerForm, BookLoansForm, FinesForm
@@ -47,12 +48,17 @@ def std(request):
 def bor(request):
     if request.method == "POST":
         form = BorrowerForm(request.POST)
-        form.validate_unique()
         if form.is_valid():
             try: 
-                form.save()
-                return redirect('/view')
+                new_borrower = form.save(commit=False)
+                borrowers = Borrower.objects.filter(Q(Phone__iexact=new_borrower.Phone) | Q(Ssn__iexact=new_borrower.Ssn))
+                if not borrowers:
+                    form.save()
+                    return redirect('/view')
+                else:
+                    raise Http404("Borrower with given phone or SSN already exists!")
             except:
+                return redirect('/bor-already-exists')
                 pass
     else:
         print(BookForm.errors)
@@ -65,10 +71,13 @@ def home_view(request, *args, **kwargs):
 def view(request, *args, **kwargs):
     return render(request, 'view.html',{})
 
+def bor_already_exist(request, *args, **kwargs):
+    return render(request, 'bor-already-exists.html',{})
+
 def results(request):
     if request.method == "POST":
         searched = request.POST['searched']
-        titles = Book_Authors.objects.filter(Q(Isbn__Title__icontains=searched) | Q(Author_id__Name__icontains=searched))
+        titles = Book_Authors.objects.filter(Q(Isbn__Title__icontains=searched) | Q(Author_id__Name__icontains=searched)).order_by('Isbn')
         titles_list = list(titles)
         x=0
         for title in titles_list:
@@ -102,6 +111,7 @@ def search(request):
 
 def borsearch(request):
     return render(request, 'search-borrower.html', {}) 
+
 def show_book(request, book_id):
     book = Book_Authors.objects.get(pk = book_id)
     x = book.Isbn.Isbn
@@ -157,25 +167,15 @@ def checkout(request, isbn, cID):
             return render(request, 'checkout.html', {'formdone' : formdone, 'formgood' : formgood, 'cardID': cardID, 'cID' : cID, 'book' : book, 'form' : form, 'currdate' : currdate, 'nextdate' : nextdate})
 
 
-def show_loan(request, card_id):
-    borrower = Borrower.objects.get(Card_id = card_id)
-    x = borrower.Card_id.Card_id
-    borLoan = Book_Loans.objects.filter(Card_id = card_id)
-    borLoanCount = borLoan.count()
-    if request.method == "GET":
-        return render(request, 'show-loan.html', {'borrower': borrower, 'borLoan': borLoan, 'borLoanCount': borLoanCount})
-    else: 
-        cid = request.POST['cID']
-        bor = Borrower.objects.filter(Card_id=cid)
-        idExist = borrower.count()
+def show_loan(request, loan_id):
+    borLoan = Book_Loans.objects.get(Loan_id = loan_id)
+    borFine = Fines.objects.get(Loan_id = loan_id)
+    x = borLoan.Card_id.Card_id
+    borrower = Borrower.objects.get(Card_id = x)
 
-        loans = Book_Loans.objects.filter(Card_id=cid)
-        booksout = loans.count()
 
-        if idExist != 0 and borLoan == 0:
-            return redirect(f'/pay-fine/{loans.Loan_id}/{cid}')
-        else:
-            return render(request, 'show-book.html', {'borrower': borrower, 'borLoan': borLoan, 'borLoanCount':borLoanCount, 'idExist' : idExist, 'booksout' : booksout })
+    return render(request, 'show-loan.html', {'borLoan':borLoan,'borFine':borFine, 'borrower':borrower})
+
 
 def show_borrower(request, card_id):
     borrower = Borrower.objects.get(Card_id = card_id)
@@ -197,6 +197,30 @@ def show_borrower(request, card_id):
         else:
             return render(request, 'show-borrower.html', {'borrower': borrower, 'borLoan': borLoan, 'borLoanCount':borLoanCount, 'idExist' : idExist, 'booksout' : booksout })
 
+def checkin_get(request):
+    if request.method == 'GET':
+        return render(request, 'checkin-get.html', {})
+
+
+    else:
+        isbn = request.POST['isbn']
+        cid = request.POST['cardid']
+
+        loan = Book_Loans.objects.filter(Isbn = isbn, Card_id = cid, Date_in__isnull=True)
+        loanExist = loan.count()
+
+        if loanExist > 0:
+            return redirect(f'/checkin-page/{isbn}/{cid}')
+
+        else:
+            return render(request, 'checkin-get.html', {'loanExist' : loanExist})
+            
+def checkin_page(request, isbn, cardid):
+    currdate = datetime_safe.date.today()
+    loan = Book_Loans.objects.get(Isbn = isbn, Card_id = cardid, Date_in__isnull=True)
+    loan.Date_in = currdate
+    loan.save()
+    return render(request, 'checkin-page.html', {})
 
 # DUPLICATE OF CHECKOUT TO-DO!
 def pay_fine(request, loan_id, cID):
@@ -234,12 +258,19 @@ def pay_fine(request, loan_id, cID):
 
 def edit_borrower(request, card_id):
     instance = get_object_or_404(Borrower, pk=card_id)
+    loan_instance = Borrower.objects.filter(Card_id=card_id)
+    old_instance = get_object_or_404(Borrower, pk=card_id)
     form = BorrowerForm(request.POST or None, instance=instance)
-    logger.info(form)
     if form.is_valid():
         form.save()
+        if instance.Phone != old_instance.Phone:
+            if loan_instance:
+                x=0
+                for loan in loan_instance:
+                    loan_instance[x].Card_id = instance.Card_id
+                    x=x+1
+
+            Borrower.objects.filter(Phone=old_instance.Phone).delete()
         return redirect('view')
-    else:
-        logger.info("Invalid form")
         
     return render(request, 'edit-borrower.html', {'borrower': instance, 'form':form})
