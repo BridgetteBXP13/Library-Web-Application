@@ -18,10 +18,10 @@
         <center>
             <strong>
                 <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Add New Borrower</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Add New Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Book Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In Book</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'loansearch' %}">Loan Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
@@ -75,12 +75,7 @@
                     </div>
 
                     <div >
-                        
-                        <label >Due Date:</label>
-                            <div>
-                                {{ form.Due_Date }}
-                            </div>
-                    </div>
+
 
 
                     <div>

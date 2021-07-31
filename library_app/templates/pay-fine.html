@@ -4,24 +4,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title> Check Out </title>
+    <title> Pay Fine </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
 </head>
 
 
 <body>
 
-    <h1>Checkin</h1>
+    <h1>Pay Fine</h1>
     <hr />
 
     <div class="solid"> 
         <center>
             <strong>
                 <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
-                <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'bor' %}">Add New Borrower</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'std' %}">Add New Book</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'search' %}">Book Search</a> &nbsp; &nbsp; &nbsp;
+                <a href="{% url 'chin-get' %}">Check In Book</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
                 <a href="{% url 'loansearch' %}">Loan Search</a> &nbsp; &nbsp; &nbsp;
             </strong>
@@ -41,14 +41,15 @@
                 <br />
                 <h3> Loan ID: {{ fine.Loan_id.Loan_id }}</h3>
                 <br />
-                <h3> Name: {{ fine.Loan_id.Card_id.Name }}</h3>
+                <h3>Borrower:</h3>
+                <h4> Name: {{ fine.Loan_id.Card_id.Name }}</h3>
                 <br />
-                <h3> Card ID: {{ fine.Loan_id.Card_id.Name }} </h3>
+                <h4> Card ID: {{ fine.Loan_id.Card_id.Card_id }} </h3>
                 <br />
-
-                <h3> Title: {{ fine.Loan_id.Isbn.Title }}</h3>
+                <h3>Book:</h3>
+                <h4> Title: {{ fine.Loan_id.Isbn.Title }}</h3>
                 <br />
-                <h3> ISBN: {{ fine.Loan_id.Isbn.Isbn }}</h3>
+                <h4> ISBN: {{ fine.Loan_id.Isbn.Isbn }}</h3>
                 <br />
                 
             

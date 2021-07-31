@@ -56,7 +56,6 @@ class Book_Loans(models.Model):
     Due_Date = models.DateField(auto_now=False, auto_now_add=False, default=datetime.now()+timedelta(days=14))
     Date_in = models.DateField(auto_now=False, auto_now_add=False, blank=True, null=True)
 
-
     class Meta:
         db_table = 'BOOK_LOANS'
         verbose_name_plural="Book_Loans"
@@ -79,6 +78,7 @@ class Fines(models.Model):
                 self.Fine_amt = (.25*delta.days)
             else:
                 self.Fine_amt = 0
+                self.Paid = True
         except:
             print("Given book loan id doesn't exist!")
         super(Fines, self).save(*args, **kwargs)

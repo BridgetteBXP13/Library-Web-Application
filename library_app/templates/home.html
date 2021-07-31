@@ -17,10 +17,10 @@
             <center>
                 <strong>
                     <a href="{% url '' %}">Home</a> &nbsp; &nbsp; &nbsp;
-                    <a href="{% url 'bor' %}">Create a profile</a> &nbsp; &nbsp; &nbsp;
-                    <a href="{% url 'std' %}">Book</a> &nbsp; &nbsp; &nbsp;
-                    <a href="{% url 'search' %}">Search</a> &nbsp; &nbsp; &nbsp;
-                    <a href="{% url 'chin-get' %}">Check In</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'bor' %}">Add New Borrower</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'std' %}">Add New Book</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'search' %}">Book Search</a> &nbsp; &nbsp; &nbsp;
+                    <a href="{% url 'chin-get' %}">Check In Book</a> &nbsp; &nbsp; &nbsp;
                     <a href="{% url 'borsearch' %}">Borrower Search</a> &nbsp; &nbsp; &nbsp;
                     <a href="{% url 'loansearch' %}">Loan Search</a> &nbsp; &nbsp; &nbsp;
                 </strong>
@@ -33,10 +33,17 @@
 
 
     <div class="column middle">
-       <center>
-            <h2>Welcome to the Homepage!</h2>
-            <p> This is has the links to the other pages and info on how our website works!</p>
-        </center>
+            <h2>Welcome to Blue Library Manager!</h2>
+            <h3> About our links above:</h3>
+            
+            <p><a href="{% url '' %}">Home</a> you can enter our homepage. (Thats this webpage!)</p>
+            
+            <p><a href="{% url 'bor' %}">Add New Borrower</a> you can enter details to add a new borrower to our library database.</p>
+            <p><a href="{% url 'std' %}">Add New Book</a> you can enter details to add a new book to our library database.</p>
+            <p><a href="{% url 'search' %}">Book Search</a> you can search for books currently in our library database. The search can be used with any book title, isbn, or author name.</p>
+            <p><a href="{% url 'chin-get' %}">Check In Book</a> you can quickly check in your book using your Card ID and Book Loan ID.</p>
+            <p><a href="{% url 'borsearch' %}">Borrower Search</a> you can search for borrowers in our library database. The search can be used with any borrower name, card ID, loan ID, or phone number.</p>
+            <p><a href="{% url 'loansearch' %}">Loan Search</a> you can search for book loans in our library database. The search can be used wth any borrower name, card ID, loan ID, or book isbn.</p>
     </div>
 
     <div class="column right background" style="background-color: darkgrey"> </div>

@@ -35,7 +35,6 @@ class BookLoansForm(forms.ModelForm):
             'Isbn',
             'Card_id',
             'Date_out',
-            'Due_Date'
         ]
 
 

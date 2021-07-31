@@ -44,33 +44,37 @@
             <h3>Loan ID: {{ borLoan.Loan_id }} </h3>
             <h4>Checkout Date: {{borLoan.Date_out}}</h4>
             <h4>Due_Date: {{borLoan.Due_Date}}</h4>
-            <h4>Date In: {{borLoan.Date_in}}</h4>
             <br />
             <h3>Borrower:</h3>
             <h4>Card ID: {{borrower.Card_id}} </h4>
             <h4>Name: {{borrower.Name}}</h4>
             <br />
+            <h3>Check In and Fine:</h3>
 
-            <h3>Fines:</h3>
-            <h4>Amount: {{borFine.Fine_amt}}</h4>
-            <h4>Paid: {%if borFine.Paid %}Yes{%else%}No{%endif%}</h4>
-    
-            <br />
-            <a href="{% url 'edit-borrower' borrower.Card_id %}">Click Here to Update Info</a>
-            <br />
-            <br />
-            
             {% if borLoan.Date_in == None %}
+                <h4>Book not checked in yet.</h4>
                 <a href="{% url 'chin-page' borLoan.Isbn.Isbn borrower.Card_id %}">Click Here to Check in the book</a>
+                <h4>Current Fine Amount: {{borFine.Fine_amt}}</h4>
                 <br />
                 <br />
 
             {% elif borFine.Paid == False %}
+                <h4>Book Checked In: {{borLoan.Date_in}}</h4>
+                <h4>Fine Amount Due: {{borFine.Fine_amt}}</h4>
                 <a href="{% url 'pay-fine' borLoan.Loan_id %}">Click Here to pay the fine</a>
                 <br />
                 <br />
-            
+            {% elif borFine.Paid == True %}
+                <h4>Book Checked In: {{borLoan.Date_in}}</h4>
+                <h4>Fine Paid: {{borFine.Fine_amt}}</h4>
+                <br />
+                <br />
             {% endif %}
+    
+            <br />
+            <br />
+            
+
 
 
             <footer>Made By: Bridgette Bryant, Nicholas Vitale, Paul Percifield, and Roland Chaumont</footer>

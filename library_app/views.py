@@ -76,7 +76,7 @@ def bor_already_exist(request, *args, **kwargs):
 def results(request):
     if request.method == "POST":
         searched = request.POST['searched']
-        titles = Book_Authors.objects.filter(Q(Isbn__Title__icontains=searched) | Q(Author_id__Name__icontains=searched)).order_by('Isbn')
+        titles = Book_Authors.objects.filter(Q(Isbn__Isbn__icontains=searched) | Q(Isbn__Title__icontains=searched) | Q(Author_id__Name__icontains=searched)).order_by('Isbn')
         titles_list = list(titles)
         x=0
         if searched != '':
@@ -172,6 +172,8 @@ def checkout(request, isbn, cID):
         if form.is_valid():
             try:
                 book_loan=form.save()
+                book_loan.Due_Date = book_loan.Date_out + timedelta(days=14)
+                book_loan.save()
                 fines = Fines.objects.create(Loan_id=book_loan)
                 return render(request, 'checkout.html', {'form':form, 'formdone' : formdone})
             except:
