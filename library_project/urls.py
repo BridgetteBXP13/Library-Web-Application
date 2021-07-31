@@ -38,6 +38,7 @@ urlpatterns = [
     path('show-loan/<loan_id>', views.show_loan, name='show-loan'),
     path('loansearch/', views.loansearch, name='loansearch'),
     path('loanresults/', views.loanresults, name='loanresults'),
+    path('del-book/<isbn>', views.delbook, name='del-book'),
 ]
 
 
