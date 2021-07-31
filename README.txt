@@ -74,9 +74,11 @@ Follow the guide for the OS present on the machine to install BLM on:
 	1. Right click on My Computer and select Properties. Then click Advanced system
 	   settings in the newly opened window, which should open another new window 
            called System Properties.
+
 	2. On the Advanced tab click the Environment Variables button. In the System
 	   Variables section scroll down to the variable that says Path. Select it and
            click on the Edit button.
+
 	3. In the Variable value text field, go all the way to the end of the line type
 	   the full MySQL installation bin directory path as C:\mysql\bin\, or 
 	   C:\Program Files\mysql\bin\, or another as chosen, and click OK. Click OK 
@@ -85,8 +87,11 @@ Follow the guide for the OS present on the machine to install BLM on:
 
  * Install MySQL as a Windows service. As the administrator of the machine:
 	1. Open the Windows Command Processor (cmd).
+
 	2. Type: mysqld --install
+
 	3. Press <Enter>, you should see the message "Service successfully installed".
+
 	4. You can start the database service by typing: mysqld --console
 
 	   ## ERROR [MY-011011] may occur, check Troubleshooting.
@@ -94,6 +99,7 @@ Follow the guide for the OS present on the machine to install BLM on:
  * Access the MySQL query window. As the administrator of the machine:
 	1. Open a new command prompt, then type: mysql -u root -p
 	   (This step assumes you started up the database using: mysqld --console)
+
 	2. This should prompt a password, for which nothing should be set, so continue
 	   by pressing <Enter>. You are now in the MySQL query window where you type
 	   in SQL queries for the database.
@@ -128,11 +134,16 @@ Follow the guide for the OS present on the machine to install BLM on:
  * For OSX 10.10  OR  OSX 10.11
 	1. Copy and paste this into Terminal: 
 		bash <(curl -Ls http://git.io/eUx7rg)
+	
 	2. Enter in your system password when prompted.
+
 	3. The script will install MySQL, generate a root password and display it along
 	   with writing a file to the desktop including the password.
+
 	4. Click to install the MySQL preference pane when prompted.
+
 	5. Close your terminal and open a new terminal to access MySQL via command line.
+
 	6. (IN EVENT OF ACCESS DENIAL, OR LOSS OF PASSWORD) Run the following in Terminal:
 		bash <(curl -Ls http://git.io/9xqEnQ)
 	   This script will restart MySQL, reset the password, and then restart it again.
@@ -144,9 +155,12 @@ Follow the guide for the OS present on the machine to install BLM on:
  * For OSX 10.9
 	1. Copy and paste this into Terminal: 
 		bash <(curl -Ls http://git.io/eUx7rg)
+
 	2. Accept prompt to install Preference Pane
+
 	3. The script will install MySQL, generate a root password and display it along
 	   with writing a file to the desktop including the password.
+
 	4. Decline prompt for Sequel Pro
 
 	########################################
@@ -214,7 +228,7 @@ Step 4  -  Pull required files from GitHub.
    folder. The Explorer in VS Code should now display the project and all its files.
    
 
-Step 4  -  Install the dependencies.
+Step 5  -  Install the dependencies.
    There is a provided requirements.txt file. Run the following command:
    pip install -r requirements.txt 
    The command above will download/install everything that is needed for the program.
@@ -224,7 +238,7 @@ Step 4  -  Install the dependencies.
 IMPORT COMMA SEPERATED VALUE FILES (.csv)
 -----------------------------------------
 
-This next steps assume that you have the MySQL Server running on a console window, and
+These next steps assume that you have the MySQL Server running on a console window, and
 that the database switched to is EMPTY (verify in cmd with command: SHOW TABLES;).
 Two csv files are included within the project. Import them with the following commands:
 
@@ -265,6 +279,7 @@ TROUBLESHOOTING
    Type: DROP DATABASE mysql;
 
    A proper implementation of the SQL database should only display the following tables:
+
 	+----------------------------+
 	| Tables_in_library          |
 	+----------------------------+
@@ -285,6 +300,7 @@ TROUBLESHOOTING
 	| django_session             |
 	| fines                      |
 	+----------------------------+
+
    MySQL may not allow you to drop databases. In that event, it is easier to simply create
    a new database in the MySQL console with command: CREATE DATABASE databasename; 
    Then configure the DATABASES module under settings.py within VS Code to match the 
