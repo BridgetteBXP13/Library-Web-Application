@@ -262,7 +262,11 @@ def edit_borrower(request, card_id):
         return redirect('view')
         
     return render(request, 'edit-borrower.html', {'borrower': instance,'loan_instance':loan_instance, 'form':form})
-    
+
 def delbook(request, isbn):
     Book.objects.filter(Isbn = isbn).delete()
     return render(request, 'del-book.html', {})
+
+def delbor(request, cardid):
+    Borrower.objects.filter(Card_id = cardid).delete()
+    return render(request, 'del-bor.html', {})

@@ -39,6 +39,7 @@ urlpatterns = [
     path('loansearch/', views.loansearch, name='loansearch'),
     path('loanresults/', views.loanresults, name='loanresults'),
     path('del-book/<isbn>', views.delbook, name='del-book'),
+    path('del-bor/<cardid>', views.delbor, name='del-bor'),
 ]
 
 
